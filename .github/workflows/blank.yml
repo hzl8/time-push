@@ -23,7 +23,7 @@ jobs:
       - name: install pip packages
         run: |
           python -m pip install --upgrade pip
-          pip3 install -r config.txt
+          pip3 install -r requirements.txt
       - name: time-push
         run: |
           python ./main.py

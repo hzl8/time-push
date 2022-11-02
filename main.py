@@ -153,12 +153,15 @@ def tip():
       res = conn.getresponse()
       data = res.read()
       data = json.loads(data)
-      pop = data["newslist"][0]["pop"]
+    #   pop = data["newslist"][0]["pop"]
+      wind = data["newslist"][0]["wind"]
       tips = data["newslist"][0]["tips"]
-      return pop,tips
+      return wind,tips
+    #   return pop,tips
 
 #推送信息
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, pop,tips,pipi, goodmoring, health_tip,lizhi):
+# def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, pop,tips,pipi, goodmoring, health_tip,lizhi):
+def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature,wind,tips,pipi, goodmoring, health_tip,lizhi):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -216,11 +219,14 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             #     "value": note_ch,
             #     "color": get_color()
             # },
-             "pop": {
-                "value": pop,
+            #  "pop": {
+            #     "value": pop,
+            #     "color": get_color()
+            # },
+            "wind":{
+                 "value": wind,
                 "color": get_color()
             },
-
             "tips": {
                 "value": tips,
                 "color": get_color()
@@ -294,7 +300,8 @@ if __name__ == "__main__":
     #彩虹屁
     pipi = caihongpi()
     #下雨概率和建议
-    pop,tips = tip()
+    # pop,tips = tip()
+    wind,tips = tip()
     #励志名言
     lizhi = lizhi()
     # 早安
@@ -303,7 +310,8 @@ if __name__ == "__main__":
     health_tip = health()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature,pop,tips,goodmoring,pipi,health_tip,lizhi)
+        # send_message(user, accessToken, city, weather, max_temperature, min_temperature,pop,tips,goodmoring,pipi,health_tip,lizhi)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature,wind,tips,goodmoring,pipi,health_tip,lizhi)
     import time
     time_duration = 3.5
     time.sleep(time_duration)
